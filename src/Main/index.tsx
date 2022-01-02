@@ -1,14 +1,18 @@
 import React ,{useState, useEffect} from 'react';
 import { Link } from "react-router-dom";
 interface StyleType {
-    main: object,
-    controlsize: object,
-    link: object,
-    schedule: object,
-    sound_control: object
+    main: object;
+    controlsize: object;
+    link: object;
+    logout?: object;
+    schedule: object;
+    sound_control: object;
+}
+interface Props{
+    setUser: React.Dispatch<any>
 }
 
-const Main = () => {
+const Main:React.FC<Props> = ({setUser}) => {
     const Style:StyleType = {
         main: {
             height: '100vh',
@@ -54,10 +58,19 @@ const Main = () => {
             color: 'black'
         }
     }
+    Style.logout = Style.schedule
 
+    const logoutOnclick = () => {
+        localStorage.removeItem('mrtUser')
+        setUser(null)
+    }
+    
     return(
         <div style={Style.main}>
             <div style={Style.controlsize}>
+                <div style={Style.link} onClick={logoutOnclick}>
+                    <div style={Style.logout}>登出</div>
+                </div>
                 <Link to='/Schedule' style={Style.link}>
                     <div style={Style.schedule}>排程</div>
                 </Link>

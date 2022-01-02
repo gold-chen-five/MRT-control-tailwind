@@ -1,10 +1,9 @@
-import axios from 'axios'
 import React ,{useState, useEffect} from 'react';
 import './App.css';
 import Schedule  from './Schedule';
 import SoundControl from './SoundControl'
 import Main from './Main';
-import { auth, db } from './firebase'
+import { auth } from './firebase'
 import { signInWithEmailAndPassword } from 'firebase/auth'
 import {
   BrowserRouter as Router,
@@ -20,27 +19,15 @@ interface Data{
   things?: string;
 }
 
-const fetchAxioApi = (apiUrl:string) => {
-  return axios.get(apiUrl)
-    .then(function (data) {
-      // handle success
-      return data
-    })
-    .catch(function (error) {
-      // handle error
-      console.log(error);
-    }) 
-}
 
 const App = () =>{
-  const [data, setData] = useState<Data>({})
   const [user,setUser] = useState<any | null >(null)
   const [userEmail,setUserEmail] = useState<string>('')
   const [account,setAccount] = useState<string>('')
   const [password,setPassword] = useState<string>('')
 
   const storageUserLocal = (us :object | null) => {
-    localStorage.setItem('user',JSON.stringify(us));
+    localStorage.setItem('mrtUser',JSON.stringify(us));
   }
   const login = () => {
     signInWithEmailAndPassword(auth,account,password)
@@ -58,7 +45,7 @@ const App = () =>{
   },[user])
 
   useEffect(()=>{
-    const userGet = localStorage.getItem('user')
+    const userGet = localStorage.getItem('mrtUser')
     setUser( JSON.parse(userGet!)) //fix | null 
   },[])
 
@@ -69,8 +56,8 @@ const App = () =>{
           user?(
               <Routes>
                   <Route path='/Schedule' element={<Schedule userEmail={userEmail}/>}/>
-                  <Route path='/SoundControl' element={<SoundControl/>}/>
-                  <Route path='/' element={<Main/>}/>
+                  <Route path='/SoundControl' element={<SoundControl userEmail={userEmail}/>}/>
+                  <Route path='/' element={<Main setUser={setUser}/>}/>
               </Routes>
           ):(
             <div className='loginPage'>

@@ -2,22 +2,42 @@ import React from "react";
 import './ShowCase.css'
 import Item from "./Item";
 
-interface Data {
-    date?: string;
-    time?: string;
-    name?: string;
-    things?: string;
+interface Data{
+    id: string,
+    data: {
+        name?: string ;
+        date?: string;
+        time?: string;
+        control?: string;
+    }
+}
+
+interface ScheduleDBitem{
+    id: string;
+    data: {
+        name: string;
+        date: string;
+        time: string;
+        control: string;
+    }
 }
 
 interface Props{
     data: Data;
+    scheduleDB: []
 }
 
-const ShowCase:React.FC<Props> = ({data}) => {
-    
+const ShowCase:React.FC<Props> = ({data,scheduleDB}) => {
     return (
         <div className="ShowCase">
-            <Item data={data}/>
+            {
+                scheduleDB.map((scheduleDBitem:ScheduleDBitem) => {
+                    return (
+                        <Item key={scheduleDBitem.id} data={data} scheduleDBitem={scheduleDBitem} />
+                    )
+                })
+            }
+            
         </div>
     )
 }
