@@ -1,4 +1,4 @@
-import React ,{useState, useEffect} from 'react';
+import React ,{useState, useEffect, useRef} from 'react';
 import './App.css';
 import Schedule  from './Schedule';
 import SoundControl from './SoundControl'
@@ -10,7 +10,7 @@ import {
   Routes ,
   Route
 } from "react-router-dom";
-
+const img = require( './image/phalanity.gif')
 
 interface Data{
   date?: string;
@@ -19,24 +19,30 @@ interface Data{
   things?: string;
 }
 
-
 const App = () =>{
   const [user,setUser] = useState<any | null >(null)
   const [userEmail,setUserEmail] = useState<string>('')
   const [account,setAccount] = useState<string>('')
   const [password,setPassword] = useState<string>('')
+  const [passwordAlert,setPasswordAlert] = useState<string>('')
+  const [localUserCheck,setLocalUserCheck] = useState<{account:string,password: string}>()
+  const localRef = useRef(false)
 
-  const storageUserLocal = (us :object | null) => {
-    localStorage.setItem('mrtUser',JSON.stringify(us));
+  const storageUserLocal = (loginAccount:string,loginPassword:string) => {
+    localStorage.setItem('mrtUser',JSON.stringify({
+      account: loginAccount,
+      password: loginPassword
+    }));
   }
-  const login = () => {
-    signInWithEmailAndPassword(auth,account,password)
+
+  const login = (loginAccount:string,loginPassword:string) => {
+    signInWithEmailAndPassword(auth,loginAccount,loginPassword)
     .then((user)=>{
       setUser(user.user)
-      storageUserLocal(user.user)
+      storageUserLocal(loginAccount,loginPassword)
     })
     .catch((error) =>{
-      alert('帳密錯誤')
+      setPasswordAlert('帳號或密碼錯誤請重新輸入')
     })
   }
 
@@ -45,8 +51,19 @@ const App = () =>{
   },[user])
 
   useEffect(()=>{
+    if(localRef.current){
+      login(localUserCheck!.account,localUserCheck!.password)
+    }  
+  },[localUserCheck])
+
+
+  useEffect(()=>{
     const userGet = localStorage.getItem('mrtUser')
-    setUser( JSON.parse(userGet!)) //fix | null 
+    if(userGet) {
+      localRef.current = true
+      const userObj:{account:string,password:string} = JSON.parse(userGet)
+      setLocalUserCheck({account:userObj.account,password:userObj.password})
+    }
   },[])
 
   return (
@@ -62,13 +79,34 @@ const App = () =>{
           ):(
             <div className='loginPage'>
               <div className="loginInfo">
-                <div>
-                  <span>帳號:</span><input type="text" className="account" onChange={(e) => setAccount(e.target.value)}/>
+                <img src={img} alt="" style={{width: '150px',height: '150px',marginBottom: '40px'}}/>
+                <div style={{padding: '10px'}}>
+                  <input style={{
+                    width: '250px',
+                    height: '35px',
+                    backgroundColor: '#FAFAFA',
+                    border: '1px solid lightgray',
+                    borderRadius: '2px'
+                  }}type="text" className="account" placeholder="電子郵件地址或帳號" onChange={(e) => setAccount(e.target.value)}/>
                 </div>
-                <div>
-                  <span>密碼:</span><input type="text" className="password" onChange={(e) => setPassword(e.target.value)}/>
+                <div style={{padding: '10px'}}>
+                  <input style={{
+                    width: '250px',
+                    height: '35px',
+                    backgroundColor: '#FAFAFA',
+                    border: '1px solid lightgray',
+                    borderRadius: '2px'
+                  }} type="password" className="password" placeholder="密碼"  onChange={(e) => setPassword(e.target.value)}/>
                 </div>
-                <button className="loginBtn" onClick={login}>登入</button>
+                <button className="loginBtn" onClick={() => login(account,password)}  style={{
+                                                                   width: '250px',
+                                                                   height: '35px',
+                                                                   borderRadius: '4px',
+                                                                   border: 'none',
+                                                                   margin: '10px',
+                                                                   cursor: 'pointer',
+                }}>登入</button>
+                <div style={{color: 'red',fontSize: '0.8em'}}>{passwordAlert}</div>
               </div>
             </div>
           )

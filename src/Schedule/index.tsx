@@ -9,9 +9,10 @@ interface Data{
     id: string,
     data: {
         name?: string ;
-        date?: string;
-        time?: string;
-        control?: string;
+        date?: number;
+        time?: number;
+        area?: string;
+        control?: boolean;
     }
 }
 
@@ -28,11 +29,12 @@ const fetchGetAxiosApi = (apiUrl:string):any => {
       })
       .catch(function (error) {
         // handle error
-        console.log(error);
+        
+        return 'server error'
       }) 
 }
   
-const fetchSetAxiosApi = (apiUrl: string,data: Data) => {
+const fetchSetAxiosApi = (apiUrl: string,data: Data | undefined) => {
     const config = {
         headers: {'Content-Type': 'application/json'}
     }
@@ -53,18 +55,26 @@ const Schedule:React.FC<Props> = ({userEmail}) => {
             name:'',
             date:'',
             time:'',
+            area: '',
             control: ''
         }
        
     }
-    const [data, setData] = useState<Data>(initdata)
+    const [data, setData] = useState<Data | undefined>()
     const [scheduleDB,setScheduleDB] = useState<[]>([])
+    const [serverInfo,setServerInfo] = useState<string>('')
     const submitref = useRef<boolean>(false)
 
     const getScheduleDB = () => {
-        fetchGetAxiosApi('http://localhost:3000/schedule').then((get:[])=>{
-            setScheduleDB(get)
-        })
+        fetchGetAxiosApi('http://localhost:3000/schedule')
+            .then((get:any)=>{
+                if(get === 'server error'){
+                    setServerInfo('目前server未開請回上一頁')
+                }
+                else{
+                    setScheduleDB(get)
+                } 
+            })
     }
 
     useEffect(()=>{
@@ -82,18 +92,15 @@ const Schedule:React.FC<Props> = ({userEmail}) => {
         if(!submitref.current) return
         fetchSetAxiosApi('http://localhost:3000/schedule',data)
             .then((e) => {
-
                 getScheduleDB()
-                console.log(e)
             })
-        
-        console.log(data)
     },[data])
     return (
         <div className="Schedulemain">
             {
                 !checkifuser?(<Navigate to='/'/>):(
                     <div  className="Schedule">
+                        <div style={{color: 'red'}}>{serverInfo}</div>
                         <Link to='/' style={{
                                         textDecoration: 'none',
                                         color: 'black',
@@ -102,8 +109,11 @@ const Schedule:React.FC<Props> = ({userEmail}) => {
                                         display: 'flex',
                                         justifyContent: 'center',
                                         alignItems: 'center',
-                                        border: '2px solid black',
-                                        borderRadius: '4px'
+                                        border: '1px solid #DBDBDB',
+                                        borderRadius: '4px',
+                                        marginTop: '40px',
+                                        marginBottom: '40px',
+                                        backgroundColor: 'white'
                                     }}>返回</Link>
                         <Input data={data} setData={setData} userEmail={userEmail} submitref={submitref}/>
                         <ShowCase data={data} scheduleDB={scheduleDB}/>

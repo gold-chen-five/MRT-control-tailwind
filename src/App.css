@@ -1,11 +1,13 @@
 .App {
   width: 100%;
   min-height: 100vh;
+  height: auto;
   display: flex;
   flex-direction: column;
   justify-content: center;
   align-items: center;
   margin: 0;
+  background-color: #fafafa;
 }
 
 .loginSuccess {
@@ -27,12 +29,35 @@
 }
 
 .loginInfo {
-  width: 40%;
-  height: 80%;
+  width: 30%;
+  height: 100%;
   display: flex;
   flex-direction: column;
   align-items: center;
   justify-content: center;
   border: 1px solid lightgray;
   border-radius: 4px;
+  background-color: white;
+}
+
+.loginBtn {
+  background-color: #cfcfcf;
+  color: white;
+}
+.loginBtn:hover {
+  background-color: #838383;
+}
+
+@media screen and (max-width: 1000px) {
+  .loginInfo {
+    width: 70%;
+  }
+}
+
+@media screen and (max-width: 425px) {
+  .loginInfo {
+    width: 100%;
+    border: 0;
+    background-color: #fafafa;
+  }
 }

@@ -1,7 +1,16 @@
 .Item {
-    display: flex;
 }
 
-.Item div {
-    margin: 10px;
+.Item > div {
+  width: 100%;
+  margin-top: 10px;
+  margin-bottom: 10px;
+  display: flex;
+  justify-content: space-around;
+}
+
+@media screen and (max-width: 320px) {
+  .Item div {
+    font-size: 0.8em;
+  }
 }

@@ -5,34 +5,43 @@ interface Data{
     id: string,
     data: {
         name?: string ;
-        date?: string;
-        time?: string;
-        control?: string;
+        date?: number;
+        time?: number;
+        area?: string;
+        control?: boolean;
     }
 }
 
 interface ScheduleDBitem{
     id: string;
     data: {
-        name: string;
-        date: string;
-        time: string;
-        control: string;
+        name?: string ;
+        date?: number;
+        time?: number;
+        area?: string;
+        control?: boolean;
     }
 }
 
 interface Props{
-    data: Data;
+    data: Data | undefined;
     scheduleDBitem: ScheduleDBitem;
 }
 
 const Item:React.FC<Props> = ({data, scheduleDBitem}) => {
     return (
         <div className="Item">
-            <div>{scheduleDBitem.data.date}</div>
-            <div>{scheduleDBitem.data.time}</div>
-            <div>{scheduleDBitem.data.name}</div>
-            <div>{scheduleDBitem.data.control}</div>
+            <div >
+                <div>{`${scheduleDBitem.data.time}:00`}</div>
+                <div>{scheduleDBitem.data.name}</div>
+                <div>{scheduleDBitem.data.area}</div>
+                <div>
+                {
+                    scheduleDBitem.data.control? "open" : "close"
+                }
+                </div>
+            </div>
+            
         </div>
     )
 }

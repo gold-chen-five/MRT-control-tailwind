@@ -1,5 +1,6 @@
 import React ,{useState, useEffect} from 'react';
 import { Link } from "react-router-dom";
+
 interface StyleType {
     main: object;
     controlsize: object;
@@ -13,6 +14,7 @@ interface Props{
 }
 
 const Main:React.FC<Props> = ({setUser}) => {
+
     const Style:StyleType = {
         main: {
             height: '100vh',
