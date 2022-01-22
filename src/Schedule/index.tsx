@@ -1,7 +1,6 @@
 import React,{ useState , useEffect, useRef} from "react";
 import Input from './Input'
 import ShowCase from './ShowCase';
-import './Schedule.css'
 import { Link, Navigate} from "react-router-dom";
 import axios from 'axios'
 import { LinkBtn } from '../publicComponents/Public';
@@ -94,14 +93,14 @@ const Schedule:React.FC<Props> = ({userEmail}) => {
             })
     },[data])
     return (
-        <div className="Schedulemain">
+        <div className="w-full min-h-screen">
             {
                 !checkifuser?(<Navigate to='/'/>):(
-                    <div  className="Schedule">
-                        <div style={{color: 'red'}}>{serverInfo}</div>
-                        <LinkBtn url="" name="返回" />
+                    <div className="w-full min-h-screen flex flex-col justify-around items-center border">
+                        <div className="text-red-400 ">{serverInfo}</div>
+                        <LinkBtn url="" name="返回" className1='mb-5' className2="border border-inherit bg-white"/>
                         <Input data={data} setData={setData} userEmail={userEmail} submitref={submitref}/>
-                        <ShowCase data={data} scheduleDB={scheduleDB}/>
+                        <ShowCase data={data} scheduleDB={scheduleDB} />
                     </div> 
                 )
             }

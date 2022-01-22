@@ -66,7 +66,7 @@ const ShowCase:React.FC<Props> = ({data,scheduleDB}) => {
     },[])
 
     return (
-        <div className="ShowCase">
+        <div className="ShowCase" >
             <select className="selectContainer" onChange={(e) => setTargetDate(e.target.value)}>
                 {
                     dateArray?.map((date: string) => {

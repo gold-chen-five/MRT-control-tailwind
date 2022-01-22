@@ -67,7 +67,7 @@ const App = () =>{
 
   return (
     <Router>
-      <div className="App flex flex-col justify-center items-center w-full h-screen min-h-screen bg-slate-50">
+      <div className="App flex flex-col justify-center items-center w-full min-h-screen bg-slate-50">
         {
           user?(
               <Routes>
@@ -76,7 +76,7 @@ const App = () =>{
                   <Route path='/' element={<Main setUser={setUser}/>}/>
               </Routes>
           ):(
-            <div className='loginPage w-full h-1/2 flex justify-center items-center' >
+            <div className='loginPage w-full h-50vh flex justify-center items-center' >
               <div className="loginInfo w-4/12 h-full flex flex-col justify-center items-center border border-solid border-inherit rounded bg-white">
                 <img className='mb-2.5' src={img} alt="" style={{width: '150px',height: '150px'}}/>
                 <div className='p-2'>
@@ -118,7 +118,6 @@ const App = () =>{
             </div>
           )
         }
-        
       </div>
     </Router>
     
