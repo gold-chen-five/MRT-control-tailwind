@@ -1,5 +1,4 @@
 import React ,{useState, useEffect, useRef} from 'react';
-import './App.css';
 import Schedule  from './Schedule';
 import SoundControl from './SoundControl'
 import Main from './Main';
@@ -68,7 +67,7 @@ const App = () =>{
 
   return (
     <Router>
-      <div className="App">
+      <div className="App flex flex-col justify-center items-center w-full h-screen min-h-screen bg-slate-50">
         {
           user?(
               <Routes>
@@ -77,36 +76,44 @@ const App = () =>{
                   <Route path='/' element={<Main setUser={setUser}/>}/>
               </Routes>
           ):(
-            <div className='loginPage'>
-              <div className="loginInfo">
-                <img src={img} alt="" style={{width: '150px',height: '150px',marginBottom: '40px'}}/>
-                <div style={{padding: '10px'}}>
-                  <input style={{
-                    width: '250px',
-                    height: '35px',
-                    backgroundColor: '#FAFAFA',
-                    border: '1px solid lightgray',
-                    borderRadius: '2px'
-                  }}type="text" className="account" placeholder="電子郵件地址或帳號" onChange={(e) => setAccount(e.target.value)}/>
+            <div className='loginPage w-full h-1/2 flex justify-center items-center' >
+              <div className="loginInfo w-4/12 h-full flex flex-col justify-center items-center border border-solid border-inherit rounded bg-white">
+                <img className='mb-2.5' src={img} alt="" style={{width: '150px',height: '150px'}}/>
+                <div className='p-2'>
+                  <input type="text" className="account 
+                    w-72 
+                    h-8 
+                    bg-slate-50
+                    border
+                    border-solid
+                    border-inherit
+                    rounded
+                    text-xs
+                  " placeholder="電子郵件地址或帳號" onChange={(e) => setAccount(e.target.value)}/>
                 </div>
-                <div style={{padding: '10px'}}>
-                  <input style={{
-                    width: '250px',
-                    height: '35px',
-                    backgroundColor: '#FAFAFA',
-                    border: '1px solid lightgray',
-                    borderRadius: '2px'
-                  }} type="password" className="password" placeholder="密碼"  onChange={(e) => setPassword(e.target.value)}/>
+                <div className='p-2'>
+                  <input type="password" className="password
+                    w-72 
+                    h-8 
+                    bg-slate-50
+                    border
+                    border-solid
+                    border-inherit
+                    rounded
+                    text-xs
+                  " placeholder="密碼"  onChange={(e) => setPassword(e.target.value)}/>
                 </div>
-                <button className="loginBtn" onClick={() => login(account,password)}  style={{
-                                                                   width: '250px',
-                                                                   height: '35px',
-                                                                   borderRadius: '4px',
-                                                                   border: 'none',
-                                                                   margin: '10px',
-                                                                   cursor: 'pointer',
-                }}>登入</button>
-                <div style={{color: 'red',fontSize: '0.8em'}}>{passwordAlert}</div>
+                <button className="loginBtn 
+                  w-72
+                  h-8
+                  rounded
+                  m-2
+                  cursor-pointer
+                  bg-gray-200
+                  hover:bg-gray-400
+                  text-white
+                " onClick={() => login(account,password)} >登入</button>
+                <div className='text-red-500'>{passwordAlert}</div>
               </div>
             </div>
           )

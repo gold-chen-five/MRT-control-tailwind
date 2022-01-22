@@ -4,7 +4,7 @@ import ShowCase from './ShowCase';
 import './Schedule.css'
 import { Link, Navigate} from "react-router-dom";
 import axios from 'axios'
-
+import { LinkBtn } from '../publicComponents/Public';
 interface Data{
     id: string,
     data: {
@@ -44,8 +44,6 @@ const fetchSetAxiosApi = (apiUrl: string,data: Data | undefined) => {
         })
     
 }
-
-
 
 const Schedule:React.FC<Props> = ({userEmail}) => {
     const [checkifuser,setCheckifuser] = useState<boolean>(true)
@@ -101,20 +99,7 @@ const Schedule:React.FC<Props> = ({userEmail}) => {
                 !checkifuser?(<Navigate to='/'/>):(
                     <div  className="Schedule">
                         <div style={{color: 'red'}}>{serverInfo}</div>
-                        <Link to='/' style={{
-                                        textDecoration: 'none',
-                                        color: 'black',
-                                        width: '250px',
-                                        height: '100px',
-                                        display: 'flex',
-                                        justifyContent: 'center',
-                                        alignItems: 'center',
-                                        border: '1px solid #DBDBDB',
-                                        borderRadius: '4px',
-                                        marginTop: '40px',
-                                        marginBottom: '40px',
-                                        backgroundColor: 'white'
-                                    }}>返回</Link>
+                        <LinkBtn url="" name="返回" />
                         <Input data={data} setData={setData} userEmail={userEmail} submitref={submitref}/>
                         <ShowCase data={data} scheduleDB={scheduleDB}/>
                     </div> 

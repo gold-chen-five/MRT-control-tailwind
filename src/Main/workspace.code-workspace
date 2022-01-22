@@ -1,0 +1,67 @@
+{
+  "folders": [
+	{
+		"path": "..\\..\\..\\..\\衛武營\\MatterportandVideoTest\\JQpractice"
+	},
+	{
+		"path": "..\\..\\..\\..\\衛武營\\MatterportandVideoTest\\work"
+	},
+	{
+		"path": "..\\..\\..\\..\\衛武營\\MatterportandVideoTest\\matterport-map"
+	},
+	{
+		"path": "..\\..\\..\\schedule-web-app"
+	},
+	{
+		"path": "..\\..\\..\\amazon"
+	},
+	{
+		"path": "..\\..\\..\\..\\網頁功能練習\\menu-icon-transfor"
+	},
+	{
+		"path": "..\\..\\..\\..\\衛武營\\MatterportandVideoTest\\video-tag"
+	},
+	{
+		"path": "..\\..\\..\\interviewtest"
+	},
+	{
+		"path": "..\\..\\..\\MRT-control"
+	},
+	{
+		"path": "..\\..\\..\\tailwind-test"
+	},
+	{
+		"path": "..\\..\\..\\api-get-test"
+	},
+	{
+		"path": "..\\..\\..\\aws-amplify-test"
+	},
+	{
+		"path": "..\\..\\..\\..\\threeJS\\course\\11-textures"
+	},
+	{
+		"path": "..\\..\\..\\..\\threeJS\\course\\12-materials"
+	},
+	{
+		"path": "..\\..\\..\\..\\threeJS\\course\\13-3d-text"
+	},
+	{
+		"path": "..\\..\\..\\..\\threeJS\\course\\23-imported-models"
+	},
+	{
+		"path": "..\\..\\..\\..\\學習資料\\webpack"
+	},
+	{
+		"path": "..\\..\\..\\testing"
+	},
+	{
+		"path": "..\\.."
+	},
+	{
+		"path": "..\\..\\..\\..\\threeJS\\course\\15-lights"
+	}
+],
+  "settings": {
+    "liveServer.settings.multiRootWorkspaceName": "htmltest"
+  }
+}
