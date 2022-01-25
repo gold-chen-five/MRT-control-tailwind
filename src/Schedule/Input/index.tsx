@@ -20,13 +20,14 @@ interface Props{
     setData: React.Dispatch<React.SetStateAction<Data | undefined>>;
     userEmail?: string;
     submitref: MutableRefObject<boolean>;
+    checkServer: boolean;
 }
 
-const Input:React.FC<Props> = ({data,setData, userEmail,submitref}) => {
-    const [btnopenstyle,setBtnopenstyle] = useState<string>('btnClose')
-    const [btnclosestyle,setBtnclosestyle] = useState<string>('btnClose')
-    const [btnopenAreastyle,setBtnopenAreastyle] = useState<string>('btnClose')
-    const [btncloseAreastyle,setBtncloseAreastyle] = useState<string>('btnClose')
+const Input:React.FC<Props> = ({data,setData, userEmail,submitref, checkServer}) => {
+    const [btnopenstyle,setBtnopenstyle] = useState<string>('bg-neutral-200 text-blacktnClose')
+    const [btnclosestyle,setBtnclosestyle] = useState<string>('bg-neutral-200 text-black')
+    const [btnR9Areastyle,setBtnR9Areastyle] = useState<string>('bg-neutral-200 text-black')
+    const [btnR10Areastyle,setBtnR10Areastyle] = useState<string>('bg-neutral-200 text-black')
     const [name,setName] = useState<string | undefined>('')
     const [date,setDate] = useState<string>('')
     const [time,setTime] = useState<string>('')
@@ -39,32 +40,37 @@ const Input:React.FC<Props> = ({data,setData, userEmail,submitref}) => {
 
     const btnOnclick = (input:string) => {
         if(input === 'open'){
-            setBtnopenstyle('btnclick')
-            setBtnclosestyle('btnClose')
+            setBtnopenstyle('bg-black text-white')
+            setBtnclosestyle('bg-neutral-200 text-black')
             setControl('open')
         }else if(input === 'close'){
-            setBtnopenstyle('btnClose')
-            setBtnclosestyle('btnclick')
+            setBtnopenstyle('bg-neutral-200 text-black')
+            setBtnclosestyle('bg-black text-white')
             setControl('close')
         }
     }
     
     const btnOnclickArea = (input:string) => {
         if(input === 'R9'){
-            setBtnopenAreastyle('btnclick')
-            setBtncloseAreastyle('btnClose')
+            setBtnR9Areastyle('bg-black text-white')
+            setBtnR10Areastyle('bg-neutral-200 text-black')
             setArea('R9')
         }else if(input === 'R10'){
-            setBtnopenAreastyle('btnClose')
-            setBtncloseAreastyle('btnclick')
+            setBtnR9Areastyle('bg-neutral-200 text-black')
+            setBtnR10Areastyle(' bg-black text-white')
             setArea('R10')
         }
     }
 
     const sendSchedule = () => {
+        if(!checkServer){
+            setUpdateAlert('server 未開，上傳失敗')
+            setAlertcolor('text-red-600')
+            return
+        }
         if(name === '' || date === '' || time=== '' || area === '' || control === '' ){
             setUpdateAlert('你有東西沒填')
-            setAlertcolor('red')
+            setAlertcolor('text-red-600')
             return
         }
         const transferDate = parseInt(date.replaceAll('-',''))
@@ -83,7 +89,7 @@ const Input:React.FC<Props> = ({data,setData, userEmail,submitref}) => {
         })
         submitref.current = true
         setUpdateAlert('上傳成功')
-        setAlertcolor('green')
+        setAlertcolor('text-green-600')
     }
     const plsZero = (num : any) => {
         let result = num
@@ -111,7 +117,7 @@ const Input:React.FC<Props> = ({data,setData, userEmail,submitref}) => {
         if(area === 'R9'){
             setTime('10:00')
             setHtmlRenderTime(
-                <select className="selectContainerInput" onChange={(e) => setTime(e.target.value)}>
+                <select className="border-none w-full h-8 bg-neutral-200 text-black rounded p-2 cursor-pointer text-xs" onChange={(e) => setTime(e.target.value)}>
                     <option value="10:00">10:00</option>
                     <option value="11:00">11:00</option>
                     <option value="13:00">13:00</option>
@@ -127,7 +133,7 @@ const Input:React.FC<Props> = ({data,setData, userEmail,submitref}) => {
         else if (area === 'R10'){
             setTime('18:00')
             setHtmlRenderTime(
-                <select className="selectContainerInput" onChange={(e) => setTime(e.target.value)}>
+                <select className="border-none w-full h-8 bg-neutral-200 text-black rounded p-2 cursor-pointer text-xs" onChange={(e) => setTime(e.target.value)}>
                     <option value="18:00">18:00</option>
                     <option value="19:00">19:00</option>
                     <option value="20:00">20:00</option>
@@ -147,41 +153,26 @@ const Input:React.FC<Props> = ({data,setData, userEmail,submitref}) => {
     },[date])
 
     return (
-        <div className='Input'>
-            <div className="boardsize">
-                <h1>排程</h1>
-                <div className='list-block'>
+        <div className='w-1/2 h-60vh flex justify-center items-center border border-gray-300 border-solid rounded bg-white mb-8'>
+            <div className="w-3/4 flex flex-col justify-center items-center">
+                <h1 className='text-2xl font-bold'>排程</h1>
+                <div className='m-3 w-3/5'>
                     <div>辦事人員</div>
                     <div>{userEmail}</div>
                 </div>
-                <div className='list-block'>
+                <div className='m-3 w-3/5'>
                     <div>展演區域</div>
-                    <div className="openclosebtnContainer">
-                        <button className={btnopenAreastyle} onClick={() => btnOnclickArea('R9')}>R9</button>
-                        <button className={btncloseAreastyle} onClick={() => btnOnclickArea('R10')}>R10</button>
+                    <div>
+                        <button className={`w-12 h-12 mr-2.5 rounded border-none cursor-pointer ${btnR9Areastyle} `} onClick={() => btnOnclickArea('R9')}>R9</button>
+                        <button className={`w-12 h-12 mr-2.5 rounded border-none cursor-pointer ${btnR10Areastyle}`} onClick={() => btnOnclickArea('R10')}>R10</button>
                     </div>
                 </div>
-                <div className='list-block'>
+                <div className='m-3 w-3/5'>
                     <div>日期</div>
-                    {
-                        //<input type="date" className='date' min={currentdate?.mindate} max={currentdate?.maxdate} value={date} onChange={(e) => setDate(e.target.value)}/>
-                    }
-                   
                     <DatePicker 
                         render={(value:any, openCalender:any) => {
                             return (
-                                <div style={{
-                                    border: 'none',
-                                    width: '100%',
-                                    height: '30px',
-                                    backgroundColor: '#efefef',
-                                    color: 'black',
-                                    borderRadius: '4px',
-                                    padding: '5px',
-                                    cursor: 'pointer',
-                                    boxSizing: 'border-box',
-                                    fontSize: '0.8em'
-                                }} onClick={openCalender}>
+                                <div className='border-none w-full h-8 bg-neutral-200 text-black rounded p-2 cursor-pointer box-border text-xs' onClick={openCalender}>
                                     {value}
                                 </div>
                             )
@@ -198,26 +189,26 @@ const Input:React.FC<Props> = ({data,setData, userEmail,submitref}) => {
                     />
                     
                 </div>
-                <div className='list-block'>
+                <div className='m-3 w-3/5'>
                     <div>時間</div>
                     {
                         area ? htmlRenderTime : null
                     }
                 </div>
                 
-                <div className='list-block'>
+                <div className='m-3 w-3/5'>
                     <div>展演開/關</div>
-                    <div className="openclosebtnContainer">
-                        <button className={btnopenstyle} onClick={() => btnOnclick('open')}>開</button>
-                        <button className={btnclosestyle} onClick={() => btnOnclick('close')}>關</button>
+                    <div>
+                        <button className={`w-12 h-12 mr-2.5 rounded border-none cursor-pointer ${btnopenstyle} `}  onClick={() => btnOnclick('open')}>開</button>
+                        <button className={`w-12 h-12 mr-2.5 rounded border-none cursor-pointer ${btnclosestyle} `}  onClick={() => btnOnclick('close')}>關</button>
                     </div>
                 </div>
                 
-                <div className='list-block'>
-                    <button className='Pass' onClick={sendSchedule}>上傳</button>
+                <div className='m-3 w-3/5'>
+                    <button className='text-white text-sm bg-black w-full h-9 rounded p-2 cursor-pointer box-border' onClick={sendSchedule}>上傳</button>
                 </div>
                    
-                <div className='list-block' style={{color: alertcolor,fontSize: '0.8em'}}>
+                <div className={`m-2 w-3/5 text-xs ${alertcolor}`}>
                     {updateAlert}
                 </div>
             </div>    

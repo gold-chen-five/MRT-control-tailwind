@@ -60,6 +60,7 @@ const Schedule:React.FC<Props> = ({userEmail}) => {
     const [data, setData] = useState<Data | undefined>()
     const [scheduleDB,setScheduleDB] = useState<[]>([])
     const [serverInfo,setServerInfo] = useState<string>('')
+    const [checkServer,setCheckServer] = useState<boolean>(false)
     const submitref = useRef<boolean>(false)
 
     const getScheduleDB = () => {
@@ -67,9 +68,11 @@ const Schedule:React.FC<Props> = ({userEmail}) => {
             .then((get:any)=>{
                 if(get === 'server error'){
                     setServerInfo('目前server未開請回上一頁')
+                    setCheckServer(false)
                 }
                 else{
                     setScheduleDB(get)
+                    setCheckServer(true)
                 } 
             })
     }
@@ -98,8 +101,8 @@ const Schedule:React.FC<Props> = ({userEmail}) => {
                 !checkifuser?(<Navigate to='/'/>):(
                     <div className="w-full min-h-screen flex flex-col justify-around items-center border">
                         <div className="text-red-400 ">{serverInfo}</div>
-                        <LinkBtn url="" name="返回" className1='mb-5' className2="border border-inherit bg-white"/>
-                        <Input data={data} setData={setData} userEmail={userEmail} submitref={submitref}/>
+                        <LinkBtn url="" name="返回" className1='mb-5' className2="border border-gray-300 bg-white"/>
+                        <Input data={data} setData={setData} userEmail={userEmail} submitref={submitref} checkServer={checkServer}/>
                         <ShowCase data={data} scheduleDB={scheduleDB} />
                     </div> 
                 )
