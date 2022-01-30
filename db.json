@@ -99,12 +99,42 @@
         "area": "R9",
         "control": true
       }
+    },
+    {
+      "id": "513dcd2e-e366-424a-81cf-e9ffcffd9ec3",
+      "data": {
+        "name": "info@phalanity.com.tw",
+        "date": 20220130,
+        "time": 10,
+        "area": "R9",
+        "control": true
+      }
+    },
+    {
+      "id": "0aba66f9-7fb6-4039-95a6-e320287ef4ce",
+      "data": {
+        "name": "info@phalanity.com.tw",
+        "date": 20220130,
+        "time": 10,
+        "area": "R9",
+        "control": true
+      }
+    },
+    {
+      "id": "0301a2f4-8c45-4c3e-8d54-69c90ebaa888",
+      "data": {
+        "name": "info@phalanity.com.tw",
+        "date": 20220130,
+        "time": 10,
+        "area": "R9",
+        "control": true
+      }
     }
   ],
   "soundcontrol": [
     {
       "id": "R9",
-      "volume": 68
+      "volume": 36
     },
     {
       "id": "R10",

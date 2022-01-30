@@ -1,5 +1,4 @@
 import React, { useEffect, useState } from "react";
-import './ShowCase.css'
 import Item from "./Item";
 
 interface Data{
@@ -66,8 +65,8 @@ const ShowCase:React.FC<Props> = ({data,scheduleDB}) => {
     },[])
 
     return (
-        <div className="ShowCase" >
-            <select className="selectContainer" onChange={(e) => setTargetDate(e.target.value)}>
+        <div className="border border-solid border-gray-300 rounded w-1/4 2xl:w-1/3 lg:w-3/5 sm:w-full min-h-5 bg-white mb-10 xl:mb-36" >
+            <select className="m-5 border-none w-40 h-12 bg-neutral-200 text-black rounded p-1 cursor-pointer" onChange={(e) => setTargetDate(e.target.value)}>
                 {
                     dateArray?.map((date: string) => {
                         return (

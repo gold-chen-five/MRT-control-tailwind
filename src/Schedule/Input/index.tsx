@@ -1,5 +1,4 @@
 import React, { MutableRefObject, useEffect, useState} from 'react';
-import './input.css'
 import { v4 } from 'uuid'
 import DatePicker, { DateObject } from "react-multi-date-picker"
 import type{Value} from "react-multi-date-picker"
@@ -153,8 +152,8 @@ const Input:React.FC<Props> = ({data,setData, userEmail,submitref, checkServer})
     },[date])
 
     return (
-        <div className='w-1/2 h-60vh flex justify-center items-center border border-gray-300 border-solid rounded bg-white mb-8'>
-            <div className="w-3/4 flex flex-col justify-center items-center">
+        <div className='w-1/2 sm:w-full h-60vh 2xl:h-80vh xl:h-screen flex justify-center items-center border border-gray-300 border-solid rounded bg-white mb-8 '>
+            <div className="w-3/4 sm:w-full flex flex-col justify-center items-center">
                 <h1 className='text-2xl font-bold'>排程</h1>
                 <div className='m-3 w-3/5'>
                     <div>辦事人員</div>

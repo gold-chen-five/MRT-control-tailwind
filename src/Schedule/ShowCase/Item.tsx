@@ -1,5 +1,5 @@
 import React from "react";
-import './Item.css'
+
 
 interface Data{
     id: string,
@@ -30,8 +30,8 @@ interface Props{
 
 const Item:React.FC<Props> = ({data, scheduleDBitem}) => {
     return (
-        <div className="Item">
-            <div >
+        <div>
+            <div className="w-full mt-3 mb-3 flex justify-around sm:text-xs">
                 <div>{`${scheduleDBitem.data.time}:00`}</div>
                 <div>{scheduleDBitem.data.name}</div>
                 <div>{scheduleDBitem.data.area}</div>
