@@ -42,7 +42,9 @@ const Input:React.FC<Props> = ({data,setData, userEmail,submitref, checkServer})
             setBtnopenstyle('bg-black text-white')
             setBtnclosestyle('bg-neutral-200 text-black')
             setControl('open')
-        }else if(input === 'close'){
+            return
+        }
+        if(input === 'close'){
             setBtnopenstyle('bg-neutral-200 text-black')
             setBtnclosestyle('bg-black text-white')
             setControl('close')
@@ -54,7 +56,9 @@ const Input:React.FC<Props> = ({data,setData, userEmail,submitref, checkServer})
             setBtnR9Areastyle('bg-black text-white')
             setBtnR10Areastyle('bg-neutral-200 text-black')
             setArea('R9')
-        }else if(input === 'R10'){
+            return
+        }
+        if(input === 'R10'){
             setBtnR9Areastyle('bg-neutral-200 text-black')
             setBtnR10Areastyle(' bg-black text-white')
             setArea('R10')
@@ -90,6 +94,7 @@ const Input:React.FC<Props> = ({data,setData, userEmail,submitref, checkServer})
         setUpdateAlert('上傳成功')
         setAlertcolor('text-green-600')
     }
+
     const plsZero = (num : any) => {
         let result = num
         if(num < 10) result = '0'+num
@@ -97,7 +102,6 @@ const Input:React.FC<Props> = ({data,setData, userEmail,submitref, checkServer})
     }
 
     const getCurrentDate = () => {
-       
         const today:any = new Date()
         const minday: any = new Date()
         minday.setDate(today.getDate())
@@ -146,10 +150,6 @@ const Input:React.FC<Props> = ({data,setData, userEmail,submitref, checkServer})
         setName(userEmail)
         getCurrentDate()
     },[])
-
-    useEffect(()=>{
-        console.log(date)
-    },[date])
 
     return (
         <div className='w-1/2 sm:w-full h-60vh 2xl:h-80vh xl:h-screen flex justify-center items-center border border-gray-300 border-solid rounded bg-white mb-8 '>

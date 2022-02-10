@@ -77,7 +77,7 @@ const App = () =>{
               </Routes>
           ):(
             <div className='loginPage w-full h-50vh flex justify-center items-center' >
-              <div className="loginInfo w-4/12 h-full flex flex-col justify-center items-center border border-solid border-inherit rounded bg-white">
+              <div className="loginInfo w-4/12 h-full flex flex-col justify-center items-center border border-solid border-inherit rounded bg-white  lg:w-3/4 sm:w-full sm:bg-slate-50 sm:border-none">
                 <img className='mb-2.5' src={img} alt="" style={{width: '150px',height: '150px'}}/>
                 <div className='p-2'>
                   <input type="text" className="account 

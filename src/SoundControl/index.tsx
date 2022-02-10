@@ -1,7 +1,7 @@
 import React,{ useState , useEffect, useRef} from "react";
 import { Link, Navigate} from "react-router-dom";
 import axios from 'axios'
-import styled from 'styled-components'
+import { LinkBtn } from '../publicComponents/Public';
 
 interface Props{
     userEmail?: string
@@ -17,9 +17,21 @@ const fetchGetSoundAxiosApi = (apiUrl:string):any => {
         console.log(error);
       }) 
 }
-const fetchSetSoundAxiosApi = (apiUrl:string,data:{id: string; volume: number | undefined}):any => {
-    return axios.put(apiUrl,data)   
+const fetchSetSoundAxiosApi = (apiUrl:string):any => {
+    return axios.get(apiUrl)
+      .then(function (data) {
+        console.log(data)
+        //const result:{} = data.data
+        //return result
+      })
+      .catch(function (error) {
+        // handle error
+        console.log(error);
+      }) 
 }
+// const fetchSetSoundAxiosApi = (apiUrl:string,data:{id: string; volume: number | undefined}):any => {
+//     return axios.put(apiUrl,data)   
+// }
 
 const SoundControl:React.FC<Props> = ({userEmail}) => {
     const [r9,setR9] = useState<{id: string,volume: number | undefined}>({id: '',volume: undefined})
@@ -51,12 +63,14 @@ const SoundControl:React.FC<Props> = ({userEmail}) => {
 
     useEffect(()=>{
         if(!r9ref.current) return
-        fetchSetSoundAxiosApi('http://localhost:3000/soundcontrol/R9',r9)  
+        fetchSetSoundAxiosApi(`http://192.168.2.109:9119/soundcontrol?id=R9&volumn=${r9.volume}&account=${userEmail}`) 
+        //fetchSetSoundAxiosApi('http://localhost:3000/soundcontrol/R9',r9)  
     },[r9])
 
     useEffect(()=>{
         if(!r10ref.current) return
-        fetchSetSoundAxiosApi('http://localhost:3000/soundcontrol/R10',r10)  
+        fetchSetSoundAxiosApi(`http://192.168.2.109:9119/soundcontrol?id=R10&volumn=${r10.volume}&account=${userEmail}`) 
+        //fetchSetSoundAxiosApi('http://localhost:3000/soundcontrol/R10',r10)  
     },[r10])
 
     useEffect(()=>{
@@ -66,16 +80,26 @@ const SoundControl:React.FC<Props> = ({userEmail}) => {
             return
         }
 
-        fetchGetSoundAxiosApi('http://localhost:3000/soundcontrol?id=R9')
+        fetchGetSoundAxiosApi('http://192.168.2.109:9119/soundget?id=R9')
             .then((get: [{id: string,volume: number}])=>{
                 setR9(get[0])
                 setR9input(get[0].volume)
             })
-        fetchGetSoundAxiosApi('http://localhost:3000/soundcontrol?id=R10')
+        fetchGetSoundAxiosApi('http://192.168.2.109:9119/soundget?id=R10')
             .then((get: [{id: string,volume: number}])=>{
                 setR10(get[0])
                 setR10input(get[0].volume)
             })  
+        // fetchGetSoundAxiosApi('http://localhost:3000/soundcontrol?id=R9')
+        //     .then((get: [{id: string,volume: number}])=>{
+        //         setR9(get[0])
+        //         setR9input(get[0].volume)
+        //     })
+        // fetchGetSoundAxiosApi('http://localhost:3000/soundcontrol?id=R10')
+        //     .then((get: [{id: string,volume: number}])=>{
+        //         setR10(get[0])
+        //         setR10input(get[0].volume)
+        //     })  
     },[])
 
   
@@ -85,53 +109,22 @@ const SoundControl:React.FC<Props> = ({userEmail}) => {
                 (!checkifuser) ? (
                     <Navigate to='/'/>
                 ) : (
-                    <div style={{
-                        width: '100%',
-                        height: '100vh',
-                        display: 'flex',
-                        flexDirection: 'column',
-                        justifyContent: 'space-around',
-                        alignItems: 'center'
-            
-                    }}>
-                        <Link to='/' style={{
-                            textDecoration: 'none',
-                            color: 'black',
-                            width: '250px',
-                            height: '10%',
-                            display: 'flex',
-                            justifyContent: 'center',
-                            alignItems: 'center',
-                            border: '1px solid #DBDBDB',
-                            borderRadius: '4px',
-                            backgroundColor: 'white'
-                        }}>返回</Link>
-                        
+                    <div className="w-full h-screen flex flex-col justify-around sm:justify-center items-center">
+                        <LinkBtn url="" name="返回" className1='mb-5 mt-5' className2="border border-gray-300 bg-white"/>
                         {
                             (userEmail === 'krtattendant@phalanity.com.tw') ? (
-                                <div style={{
-                                    textDecoration: 'none',
-                                    color: 'red',
-                                    width: '350px',
-                                    height: '40%',
-                                    display: 'flex',
-                                    justifyContent: 'center',
-                                    alignItems: 'center',
-                                    border: '1px solid #DBDBDB',
-                                    borderRadius: '4px',
-                                    backgroundColor: 'white'
-                                }}>你沒有權限請按返回</div>
+                                <div className="no-underline text-red-600 w-96 h-2/5 flex justify-center items-center border border-solid border-gray-300 rounded bg-white">你沒有權限請按返回</div>
                             ):(
-                                <SoundControlBoard>
-                                    < SoundControlCenter>
-                                        <h1>音量調整</h1>
-                                        <SoundControlShow >R9&nbsp;&nbsp;音量(0~100): {r9.volume}</SoundControlShow>
-                                        <SoundControlShow >R10音量(0~100): {r10.volume}</SoundControlShow>
-                                        <SoundControlItem >
-                                            <div style={{marginRight: '20px',marginBottom: '5px'}}>R9&nbsp;&nbsp;音量控制(0~100):</div>
+                                <div className="w-2/5 h-3/5 border border-solid border-gray-300 rounded flex justify-center bg-white 2xl:w-3/5 sm:w-full">
+                                    <div className="w-4/5 h-full flex flex-col justify-around items-center sm:w-11/12">
+                                        <h1 className="text-3xl font-bold">音量調整</h1>
+                                        <div className="w-full text-2xl sm:text-base">R9&nbsp;&nbsp;音量(0~100): {r9.volume}</div>
+                                        <div className="w-full text-2xl sm:text-base">R10音量(0~100): {r10.volume}</div>
+                                        <div className="w-full flex items-center text-2xl 2xl:text-xl lg:block sm:text-base">
+                                            <div className="mr-5 mb-1">R9&nbsp;&nbsp;音量控制(0~100):</div>
                                             
-                                            <SoundControlItemDiv>
-                                                < SoundControlItemInput 
+                                            <div className="h-10 flex items-center mr-2 lg:mb-3">
+                                                <input className="w-32 mr-1 lg:w-9/12 "
                                                     type="range"  
                                                     min="0" 
                                                     max="100" 
@@ -143,20 +136,20 @@ const SoundControl:React.FC<Props> = ({userEmail}) => {
                                                     min='0' 
                                                     max='100'
                                                     onChange={(e) => setR9input(parseInt(e.target.value))} 
-                                                    style={{width: '50px',height: '28px',marginRight: '5px',padding: '0',border: '1px solid gray',borderRadius: '2px'}}
+                                                    className="w-12 h-7 mr-1 p-0 border border-solid border-gray-700 rounded-sm"
                                                     value={r9input}
                                                 />
-                                            </SoundControlItemDiv>
+                                            </div>
                                             
-                                            <SoundControlItemDiv>
-                                                <button style={{fontSize: '0.8em',marginRight: '5px',width: '80px',height:'30px'}}  onClick={() => soundcontrolBtnOnclick('R9')}>控制</button>
-                                                <button style={{fontSize: '0.8em',width: '80px',height:'30px'}} onClick={() => setR9input(r9.volume)}>復原</button>
-                                            </SoundControlItemDiv>
-                                        </SoundControlItem >
-                                        <SoundControlItem >
-                                            <div style={{marginRight: '20px',marginBottom: '5px'}}>R10音量控制(0~100):</div>
-                                            <SoundControlItemDiv>
-                                                <SoundControlItemInput 
+                                            <div className="h-8 flex items-center lg:mb-3">
+                                                <button className="text-base mr-1 w-20 h-9 bg-neutral-300 text-black rounded border-none" onClick={() => soundcontrolBtnOnclick('R9')}>控制</button>
+                                                <button className="text-base mr-1 w-20 h-9 bg-neutral-300 text-black rounded border-none" onClick={() => setR9input(r9.volume)}>復原</button>
+                                            </div>
+                                        </div>
+                                        <div className="w-full flex items-center text-2xl 2xl:text-xl lg:block sm:text-base">
+                                            <div className="mr-5 mb-1">R10音量控制(0~100):</div>
+                                            <div className="h-10 flex items-center lg:mb-3 mr-2">
+                                                <input className="w-32 mr-1 lg:w-9/12"
                                                     type="range"  
                                                     min="0" 
                                                     max="100" 
@@ -168,18 +161,18 @@ const SoundControl:React.FC<Props> = ({userEmail}) => {
                                                     min='0' 
                                                     max='100' 
                                                     onChange={(e) => setR10input(parseInt(e.target.value))} 
-                                                    style={{width: '50px',height: '28px',marginRight: '5px',padding: '0',border: '1px solid gray',borderRadius: '2px'}}
+                                                    className="w-12 h-7 mr-1 p-0 border border-solid border-gray-700 rounded-sm"
                                                     value={r10input}
                                                 />
-                                            </SoundControlItemDiv>
+                                            </div>
                                            
-                                            <SoundControlItemDiv>
-                                                <button style={{fontSize: '0.8em',marginRight: '5px',width: '80px',height:'30px'}} onClick={() => soundcontrolBtnOnclick('R10')}>控制</button>
-                                                <button style={{fontSize: '0.8em',width: '80px',height:'30px'}} onClick={() => setR10input(r10.volume)}>復原</button>
-                                            </SoundControlItemDiv>    
-                                        </SoundControlItem >
-                                    </ SoundControlCenter>
-                                </SoundControlBoard>
+                                            <div className="h-8 flex items-center lg:mb-3">
+                                                <button className="text-base mr-1 w-20 h-9 bg-neutral-300 text-black rounded border-none" onClick={() => soundcontrolBtnOnclick('R10')}>控制</button>
+                                                <button className="text-base mr-1 w-20 h-9 bg-neutral-300 text-black rounded border-none" onClick={() => setR10input(r10.volume)}>復原</button>
+                                            </div>    
+                                        </div >
+                                    </div>
+                                </div>
                             )
                         }
                     </div>
@@ -190,68 +183,3 @@ const SoundControl:React.FC<Props> = ({userEmail}) => {
     )
 }
 export default SoundControl
-
-const SoundControlBoard = styled.div`
-    width: 40%;
-    height: 60%;
-    border: 1px solid #DBDBDB;
-    border-radius: 4px;
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    background-color: white;
-    @media screen and (max-width: 1440px){
-        width: 60%;
-    }
-    @media screen and (max-width: 425px){
-        width: 100%;
-    }
-`
-const SoundControlShow = styled.div`
-    width: 100%;
-    font-Size: 1.5em;
-    @media screen and (max-width: 425px){
-        font-Size: 1em;
-    }
-`
-const SoundControlCenter = styled.div`
-    width: 80%;
-    height: 100%;
-    display: flex;
-    flex-direction: column;
-    justify-content: space-around;
-    align-items: center;
-    @media screen and (max-width: 425px){
-        width: 90%;
-    }
-`
-const SoundControlItem = styled.div`
-    width: 100%;
-    display: flex;
-    align-items: center;
-    font-size: 1.5em;
-    @media screen and (max-width: 1280px) {
-        font-size: 1.2em;
-    }
-    @media screen and (max-width: 1024px){
-        display: block
-    }
-    @media screen and (max-width: 425px){
-        font-size: 1em;
-    }
-`
-const SoundControlItemDiv = styled.div`
-    height: 30px;
-    display: flex;
-    align-items: center;
-    @media screen and (max-width: 1024px){
-        margin-bottom: 10px;
-    }
-`
-const SoundControlItemInput = styled.input`
-    width: 130px;
-    margin-right: 5px;
-    @media screen and (max-width: 1024px){
-        width: 70%;
-    }
-`
