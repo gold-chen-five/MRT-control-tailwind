@@ -36,7 +36,6 @@ const fetchSetAxiosApi = (apiUrl:string):any => {
     return axios.get(apiUrl)
       .then(function (data) {
         // handle success
-        console.log(data)
         return data
       })
       .catch(function (error) {
@@ -45,18 +44,9 @@ const fetchSetAxiosApi = (apiUrl:string):any => {
       }) 
 }
 
-// const fetchSetAxiosApi = (apiUrl: string,data: Data | undefined) => {
-//     const config = {
-//         headers: {'Content-Type': 'application/json'}
-//     }
-//     return axios.post(apiUrl,JSON.stringify(data),config)
-//         .then((e) => {
-//             return e
-//         })
-    
-// }
 
 const Schedule:React.FC<Props> = ({userEmail}) => {
+    console.log(userEmail)
     const [checkifuser,setCheckifuser] = useState<boolean>(true)
     const [data, setData] = useState<Data | undefined>()
     const [scheduleDB,setScheduleDB] = useState<[]>([])
@@ -65,26 +55,17 @@ const Schedule:React.FC<Props> = ({userEmail}) => {
     const submitref = useRef<boolean>(false)
 
     const getScheduleDB = () => {
-        fetchGetAxiosApi('http://192.168.2.109:9119/schedule')
+        fetchGetAxiosApi('http://18.181.110.2:8001/schedule')
             .then((get:any)=>{
                 if(get === 'server error'){
                     setServerInfo('目前server未開請回上一頁')
+                    setCheckServer(false)
                 }
                 else{
                     setScheduleDB(get)
+                    setCheckServer(true)
                 } 
             })
-        // fetchGetAxiosApi('http://localhost:3000/schedule')
-        //     .then((get:any)=>{
-        //         if(get === 'server error'){
-        //             setServerInfo('目前server未開請回上一頁')
-        //             setCheckServer(false)
-        //         }
-        //         else{
-        //             setScheduleDB(get)
-        //             setCheckServer(true)
-        //         } 
-        //     })
     }
 
     useEffect(()=>{
@@ -100,22 +81,19 @@ const Schedule:React.FC<Props> = ({userEmail}) => {
     useEffect(()=>{
         //set DB
         if(!submitref.current) return
-        fetchSetAxiosApi(`http://192.168.2.109:9119/showset?data=${JSON.stringify(data)}`)
+        //console.log(JSON.stringify(data))
+        fetchSetAxiosApi(`http://18.181.110.2:8001/showset?data=${JSON.stringify(data)}`)
             .then((e:any) => {
                 getScheduleDB()
             })
-        // fetchSetAxiosApi('http://localhost:3000/schedule',data)
-        //     .then((e) => {
-        //         getScheduleDB()
-        //     })
     },[data])
     return (
-        <div className="w-full min-h-screen">
+        <div className="w-full min-h-screen ">
             {
                 !checkifuser?(<Navigate to='/'/>):(
-                    <div className="w-full min-h-screen flex flex-col justify-around items-center border">
+                    <div className="w-full min-h-screen flex flex-col justify-around items-center">
                         <div className="text-red-400 ">{serverInfo}</div>
-                        <LinkBtn url="" name="返回" className1='mb-5 mt-5' className2="border border-gray-300 bg-white"/>
+                        <LinkBtn url="" name="返回" className1='mb-5 mt-5 sm:mb-0 sm:mt-14' className2="/image/web/Button_4_1.png"/>
                         <Input data={data} setData={setData} userEmail={userEmail} submitref={submitref} checkServer={checkServer}/>
                         <ShowCase data={data} scheduleDB={scheduleDB} />
                     </div> 

@@ -13,12 +13,13 @@ const Main:React.FC<Props> = ({setUser}) => {
 
     return(
         <div className='h-screen w-full flex flex-col justify-center items-center'>
-            <div className='h-3/5 w-3/5 flex flex-col justify-around items-center'>
-                <div className='no-underline w-64 h-24' onClick={logoutOnclick}>
-                    <div className='w-64 h-24 border-2 border-solid border-black flex justify-center items-center rounded cursor-pointer text-black'>登出</div>
+            <div className='h-[557px] w-[501px] flex flex-col justify-center items-center bg-[url("/public/image/web/background_2.png")] bg-no-repeat bg-cover sm:bg-none sm:h-full sm:w-full'>
+                <div>
+                    <img className='no-underline h-16 cursor-pointer' onClick={logoutOnclick} src='/image/web/Button_1_1.png'/>
+                    <LinkBtn url="Schedule" name="排程" className1='my-24' className2='/image/web/Button_2_1.png' />
+                    <LinkBtn url="SoundControl" name="音量調整" className1='' className2='/image/web/Button_3_1.png' />
                 </div>
-                <LinkBtn url="Schedule" name="排程" className2='border-2 border-black'/>
-                <LinkBtn url="SoundControl" name="音量調整" className2='border-2 border-black'/>
+                
             </div>
         </div>
     )

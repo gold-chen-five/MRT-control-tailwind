@@ -1,0 +1,14 @@
+{
+  "files": {
+    "main.css": "/static/css/main.eb7b8e21.css",
+    "main.js": "/static/js/main.69689f83.js",
+    "static/media/phalanity.gif": "/static/media/phalanity.bea5c6e1204a08a171d1.gif",
+    "index.html": "/index.html",
+    "main.eb7b8e21.css.map": "/static/css/main.eb7b8e21.css.map",
+    "main.69689f83.js.map": "/static/js/main.69689f83.js.map"
+  },
+  "entrypoints": [
+    "static/css/main.eb7b8e21.css",
+    "static/js/main.69689f83.js"
+  ]
+}

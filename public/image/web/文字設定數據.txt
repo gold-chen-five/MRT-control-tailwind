@@ -1,0 +1,24 @@
+辦事人員_信箱
+思源黑體_Bold
+19pt
+#00d9ff
+
+-
+展演區域/日期_輸入欄內文字
+Noto Sans CJK TC
+15pt
+#4a4a4a
+
+-
+
+R9音量/R10_音量數字
+思源黑體_Bold
+34pt
+#00d9ff
+
+-
+
+音量控制數字_輸入欄內文字
+Noto Sans CJK TC
+15pt
+#4a4a4a

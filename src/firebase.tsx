@@ -2,13 +2,13 @@ import { initializeApp } from 'firebase/app'
 import { getAuth } from 'firebase/auth'
 
 const firebaseConfig = {
-    apiKey: "AIzaSyDPcwSj4re9wgneKogX3vUEBV-0mnlW6nQ",
-    authDomain: "mrt-control.firebaseapp.com",
-    projectId: "mrt-control",
-    storageBucket: "mrt-control.appspot.com",
-    messagingSenderId: "250409494721",
-    appId: "1:250409494721:web:f6d5064fc9f9ebf2f20c40",
-    measurementId: "G-ZZPXVN784Q"
+    apiKey: process.env.REACT_APP_FIREBASE_apiKey,
+    authDomain: process.env.REACT_APP_FIREBASE_authDomai,
+    projectId: process.env.REACT_APP_FIREBASE_projectId,
+    storageBucket: process.env.REACT_APP_FIREBASE_storageBucket,
+    messagingSenderId: process.env.REACT_APP_FIREBASE_messagingSenderId ,
+    appId: process.env.REACT_APP_FIREBASE_appId,
+    measurementId: process.env.REACT_APP_FIREBASE_measurementId
 };
 
 const app = initializeApp(firebaseConfig)

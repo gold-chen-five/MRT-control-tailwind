@@ -34,24 +34,52 @@ const App = () =>{
     }));
   }
 
+  const fetchAuth = (loginAccount:string,loginPassword:string) => {
+    //const auth_server_url = 'http://18.181.110.2:2001'
+    const auth_server_url = 'http://localhost:2001'
+    fetch(`${auth_server_url}/userPost`,{
+      method: 'POST',
+      body: JSON.stringify({
+        account: loginAccount,
+        password: loginPassword
+      }),
+      headers: {'Content-Type': 'application/json'}
+    })
+      .then(res => res.json())
+      .then(user => {
+        setUser(user.user)
+        storageUserLocal(loginAccount,loginPassword)
+      })
+      .catch(message => {
+        setAccount('')
+        setPassword('')
+        setPasswordAlert('帳號或密碼錯誤請重新輸入')
+      })
+  }
   const login = (loginAccount:string,loginPassword:string) => {
-    signInWithEmailAndPassword(auth,loginAccount,loginPassword)
-    .then((user)=>{
-      setUser(user.user)
-      storageUserLocal(loginAccount,loginPassword)
-    })
-    .catch((error) =>{
-      setPasswordAlert('帳號或密碼錯誤請重新輸入')
-    })
+    // signInWithEmailAndPassword(auth,loginAccount,loginPassword)
+    // .then((user)=>{
+    //   setUser(user.user)
+    //   storageUserLocal(loginAccount,loginPassword)
+    // })
+    // .catch(() =>{
+    //   setAccount('')
+    //   setPassword('')
+    //   setPasswordAlert('帳號或密碼錯誤請重新輸入')
+    // })
+    fetchAuth(loginAccount,loginPassword)     
+
   }
 
   useEffect(() => {
-    if(user) setUserEmail(user.email)
+    if(user) setUserEmail(user)
   },[user])
 
   useEffect(()=>{
     if(localRef.current){
-      login(localUserCheck!.account,localUserCheck!.password)
+      setAccount(localUserCheck!.account)
+      setPassword(localUserCheck!.password)
+      //login(localUserCheck!.account,localUserCheck!.password)
     }  
   },[localUserCheck])
 
@@ -67,7 +95,7 @@ const App = () =>{
 
   return (
     <Router>
-      <div className="App flex flex-col justify-center items-center w-full min-h-screen bg-slate-50">
+      <div className="App flex flex-col justify-center items-center w-full min-h-screen bg-black">
         {
           user?(
               <Routes>
@@ -76,43 +104,39 @@ const App = () =>{
                   <Route path='/' element={<Main setUser={setUser}/>}/>
               </Routes>
           ):(
-            <div className='loginPage w-full h-50vh flex justify-center items-center' >
-              <div className="loginInfo w-4/12 h-full flex flex-col justify-center items-center border border-solid border-inherit rounded bg-white  lg:w-3/4 sm:w-full sm:bg-slate-50 sm:border-none">
-                <img className='mb-2.5' src={img} alt="" style={{width: '150px',height: '150px'}}/>
-                <div className='p-2'>
+            <div className='loginPage w-full h-[367px] flex justify-center items-center' >
+              <div className="loginInfo w-4/12 h-full flex flex-col justify-center items-center lg:w-3/4 sm:w-full sm:bg-none bg-[url('/public/image/web/background_1.png')] bg-no-repeat">
+                <img className='mb-2.5' src={img} alt="" style={{width: '100px',height: '100px'}}/>
+                <div className='p-1'>
                   <input type="text" className="account 
-                    w-72 
+                    w-60 
                     h-8 
                     bg-slate-50
                     border
                     border-solid
                     border-inherit
-                    rounded
+                    rounded-sm
                     text-xs
-                  " placeholder="電子郵件地址或帳號" onChange={(e) => setAccount(e.target.value)}/>
+                  " placeholder="電子郵件地址或帳號" onChange={(e) => setAccount(e.target.value)} value={account}/>
                 </div>
-                <div className='p-2'>
+                <div className='p-1'>
                   <input type="password" className="password
-                    w-72 
+                    w-60 
                     h-8 
                     bg-slate-50
                     border
                     border-solid
                     border-inherit
-                    rounded
+                    rounded-sm
                     text-xs
-                  " placeholder="密碼"  onChange={(e) => setPassword(e.target.value)}/>
+                  " placeholder="密碼"  onChange={(e) => setPassword(e.target.value)} value={password}/>
                 </div>
-                <button className="loginBtn 
-                  w-72
+                <img className="loginBtn 
+                  w-40
                   h-8
-                  rounded
-                  m-2
+                  mt-4
                   cursor-pointer
-                  bg-gray-200
-                  hover:bg-gray-400
-                  text-white
-                " onClick={() => login(account,password)} >登入</button>
+                " onClick={() => login(account,password)} src='/image/web/login_Button1.png'/>
                 <div className='text-red-500'>{passwordAlert}</div>
               </div>
             </div>

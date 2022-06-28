@@ -1,0 +1,27 @@
+input[type=range] {
+    width: 279px;
+    height: 7px;
+    -webkit-appearance: none;
+    
+ }
+ input[type=range]::-webkit-slider-runnable-track {
+    -webkit-appearance: none;
+    background-image: url('/public/image/web/Volume_2.png');
+    background-repeat: no-repeat;
+    background-color: transparent;
+    border: none;
+    
+    
+    
+    
+ }
+ input[type=range]::-webkit-slider-thumb {
+    -webkit-appearance: none;
+    border: none;
+    height: 12px;
+    width: 30px;
+    background-image: url('/public/image/web/Volume_3.png');
+    background-repeat: no-repeat;
+    background-color: transparent;
+    margin-top: -2px;
+ }
