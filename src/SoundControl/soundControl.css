@@ -10,10 +10,6 @@ input[type=range] {
     background-repeat: no-repeat;
     background-color: transparent;
     border: none;
-    
-    
-    
-    
  }
  input[type=range]::-webkit-slider-thumb {
     -webkit-appearance: none;

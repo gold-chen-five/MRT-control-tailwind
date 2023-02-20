@@ -1,5 +1,5 @@
 import React,{ useState , useEffect, useRef} from "react";
-import { Link, Navigate} from "react-router-dom";
+import { Navigate} from "react-router-dom";
 import axios from 'axios'
 import { LinkBtn } from '../publicComponents/Public';
 import './soundControl.css'
@@ -111,7 +111,7 @@ const SoundControl:React.FC<Props> = ({userEmail}) => {
                             (userEmail === 'krtattendant@phalanity.com.tw') ? (
                                 <div className="no-underline text-red-600 w-96 h-2/5 flex justify-center items-center border border-solid border-gray-300 rounded bg-white text-center">你沒有權限請按返回</div>
                             ):(
-                                <div className="w-[648px] h-[491px] flex justify-center 2xl:w-3/5 bg-[url('/public/image/web/background_4.png')] bg-no-repeat bg-cover relative sm:bg-none sm:w-full sm:h-[60%]">
+                                <div className="w-[648px] h-[491px] flex justify-center 2xl:w-3/5 bg-[url('/public/image/web/background_4.png')] bg-no-repeat bg-cover relative sm:bg-none sm:w-full sm:h-[70%]">
                                     <div className="w-4/5 h-full flex flex-col justify-center items-center sm:w-11/12 ">
                                         <h1 className="text-3xl font-bold text-white absolute top-[5%] sm:text-yellow-300 sm:relative sm:text-2xl">音量調整</h1>
 
@@ -163,7 +163,7 @@ const SoundControl:React.FC<Props> = ({userEmail}) => {
                                                         value={r9input}
                                                     />
                                                     <img className="mr-2 w-20 h-7 cursor-pointer sm:mr-4" onClick={() => soundcontrolBtnOnclick('R9')} src='/image/web/Button_8_1.png'/>
-                                                    <img className="w-20 h-7 cursor-pointer" onClick={() => setR9input(r9.volume)} src='/image/web/Button_9_1.png'/>
+                                                    <img className="w-20 h-7 cursor-pointer" onClick={() => setR9input(r9.volume)} src='/image/web/Button_9_1.png' alt=""/>
                                                 </div>
                                             </div>
                                         </div>

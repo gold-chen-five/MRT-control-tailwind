@@ -34,41 +34,37 @@ const App = () =>{
     }));
   }
 
-  const fetchAuth = (loginAccount:string,loginPassword:string) => {
-    //const auth_server_url = 'http://18.181.110.2:2001'
-    const auth_server_url = 'http://localhost:2001'
-    fetch(`${auth_server_url}/userPost`,{
-      method: 'POST',
-      body: JSON.stringify({
-        account: loginAccount,
-        password: loginPassword
-      }),
-      headers: {'Content-Type': 'application/json'}
-    })
-      .then(res => res.json())
-      .then(user => {
+  const fetchAuth = async (loginAccount:string,loginPassword:string) => {
+    const auth_server_url = 'http://127.0.0.1:2001'
+    //const auth_server_url = 'http://192.168.2.19:2001'
+    try{
+      const res = await fetch(`${auth_server_url}/userPost`,{
+        method: 'POST',
+        body: JSON.stringify({
+          account: loginAccount,
+          password: loginPassword
+        }),
+        headers: {'Content-Type': 'application/json'}
+      })
+      const user = await res.json()
+      if(res.status === 200){
+        
+      
         setUser(user.user)
         storageUserLocal(loginAccount,loginPassword)
-      })
-      .catch(message => {
-        setAccount('')
-        setPassword('')
-        setPasswordAlert('帳號或密碼錯誤請重新輸入')
-      })
+      }else{
+        throw new Error(user.message)
+      }
+    }
+    catch(err){
+      setAccount('')
+      setPassword('')
+      setPasswordAlert('帳號或密碼錯誤請重新輸入')
+    }
   }
-  const login = (loginAccount:string,loginPassword:string) => {
-    // signInWithEmailAndPassword(auth,loginAccount,loginPassword)
-    // .then((user)=>{
-    //   setUser(user.user)
-    //   storageUserLocal(loginAccount,loginPassword)
-    // })
-    // .catch(() =>{
-    //   setAccount('')
-    //   setPassword('')
-    //   setPasswordAlert('帳號或密碼錯誤請重新輸入')
-    // })
-    fetchAuth(loginAccount,loginPassword)     
 
+  const login = (loginAccount:string,loginPassword:string) => {
+    fetchAuth(loginAccount,loginPassword)     
   }
 
   useEffect(() => {
@@ -137,7 +133,7 @@ const App = () =>{
                   mt-4
                   cursor-pointer
                 " onClick={() => login(account,password)} src='/image/web/login_Button1.png'/>
-                <div className='text-red-500'>{passwordAlert}</div>
+                <div className='text-red-500 mt-4'>{passwordAlert}</div>
               </div>
             </div>
           )

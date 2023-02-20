@@ -123,7 +123,7 @@ const Input:React.FC<Props> = ({data,setData, userEmail,submitref, checkServer})
 
     useEffect(()=>{
         if(area === 'R9'){
-            setTime('10:00')
+            setTime('18:00')
             setHtmlRenderTime(
                 <select className="border-none w-32 h-8 bg-neutral-200 text-black rounded p-2 cursor-pointer text-xs sm:text-center" onChange={(e) => setTime(e.target.value)}>
                     <option value="18:00">18:00</option>
@@ -134,7 +134,7 @@ const Input:React.FC<Props> = ({data,setData, userEmail,submitref, checkServer})
             )
         }
         else if (area === 'R10'){
-            setTime('18:00')
+            setTime('10:00')
             setHtmlRenderTime(
                 <select className="border-none w-32 h-8 bg-neutral-200 text-black rounded p-2 cursor-pointer text-xs sm:text-center" onChange={(e) => setTime(e.target.value)}>
                     <option value="10:00">10:00</option>
@@ -157,7 +157,7 @@ const Input:React.FC<Props> = ({data,setData, userEmail,submitref, checkServer})
     },[])
 
     return (
-        <div className='w-[648px] h-[557px] flex justify-center items-center mb-8 bg-[url("/public/image/web/background_3.png")] bg-no-repeat bg-cover sm:bg-none sm:w-full sm:h-[70vh]'>
+        <div className='w-[648px] h-[557px] flex justify-center items-center mb-8 bg-[url("/public/image/web/background_3.png")] bg-no-repeat bg-cover sm:bg-none sm:w-full sm:h-[90vh]'>
             <div className="w-3/4 sm:w-full flex flex-col justify-center items-center">
                 <h1 className='text-2xl font-bold text-white sm:text-yellow-300'>排程</h1>
                 <img src="/image/phone/demarcation.png" alt="" className='my-6 hidden w-1/2 sm:block'/>
